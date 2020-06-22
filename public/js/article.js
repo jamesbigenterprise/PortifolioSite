@@ -1,8 +1,3 @@
-let next
-
-
-
-
 //grab the button
 
 const addItemButton = document.querySelector("#add-item-button");
@@ -28,7 +23,7 @@ function addItem(name){
 
     let position = 0;
     let objectsArray = [];
-    let container = document.querySelector('')
+    let container = document.querySelector('#allItemsConteiner');
 
     currentItems.forEach(item => {
 
