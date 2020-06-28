@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include ('include/header', {title:title}) %>
+<body>
+    <h1> <% title %> </h1>
+
+    <form action="/admin/contact" method="POST">
+        <label for="name">Your name: </label>
+        <input type="text" name="name">
+        <br>
+        <label for="email">Email: </label>
+        <input type="email" name="email">
+        <br>
+        <label for="message">Message: </label>
+        <textarea rows="4" cols="50" name="message"></textarea>
+        <br>
+        <button type="submit"> Send </button>
+    </form>
+    </div> <!-- container -->
+     
+  
+
+
+
+<!-- <script defer src="/js/article.js"></script>   -->
+</body>
+</html>

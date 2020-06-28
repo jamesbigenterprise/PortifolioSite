@@ -9,6 +9,56 @@ addItemButton.addEventListener('click', () => {
     //console.log('check the sequence', currentItems);
 });
 
+document.querySelector('#save').addEventListener('click', () =>{
+    save();
+});
+function save (){
+
+    const currentItems = document.querySelectorAll(".element");
+
+    let position = 0;
+    let objectsArray = [];
+
+    currentItems.forEach(item => {
+
+        //gather the information to rebuild
+        //name
+        const name = item.children[1].attributes[0].value;
+        //input type
+        const type = item.children[1].attributes[1].nodeValue;
+        //current value *if any
+        const value = item.children[1].value;
+
+        
+        
+
+        //add to the json
+        const singleObject = {
+            name: name,
+            value: value,
+            position:position,
+            htmltype: type
+        }
+        console.log('singleObject.position:',singleObject.position );
+        objectsArray.push(singleObject);
+        position++;
+    });
+
+    //example 
+    fetch('http://localhost:7000/admin/article', {
+        method: 'POST',
+        body: JSON.stringify(objectsArray),
+        headers:{
+          'Content-Type':'application/json'
+        }
+      })
+      .then(res => res.json())
+      .then(res => {
+        //show the message and update the view
+        console.log('client: ', res);
+        
+      });
+}
 
 //add to form
 //function addElements
@@ -38,8 +88,8 @@ function addItem(name){
         console.log('name', name, 'type', type);
 
         //recreate the element
-        let container = createSingleElement(name, type);
-
+        let container = createSingleElement(name);
+ 
         //add to the json
         const singleObject = {
             name: name,
@@ -53,15 +103,24 @@ function addItem(name){
     
 }
 
-function createSingleElement (name, type){
+function createSingleElement (name){
     //recreate the element
     let container = document.createElement('div');
     container.setAttribute('class', 'element');
     let label = document.createElement('label');
     label.setAttribute('for', name);
     label.innerHTML  = name + ':';
+    console.log(name === 'paragraph');
     let input = document.createElement('input');
-    input.setAttribute('type',type);
+    if(name === 'paragraph'){
+        input = document.createElement(getType(name));    
+        input.setAttribute('rows', 10);
+        input.setAttribute('cols', 50);
+    }else{
+        
+        input.setAttribute('type', getType(name));
+    }
+    
     input.setAttribute('name', name);
 
     container.appendChild(label);
@@ -73,11 +132,13 @@ function createSingleElement (name, type){
 function getType(name){
     switch (name){
         case 'paragraph':
-            return 'text-area'
+            return 'textarea'
         case 'image':
             return 'file';
         case 'youtube-video':
-            return 'subheading';
+            return 'text';
+        case 'subheading':
+        return 'text'
         default:
             return;
     }
