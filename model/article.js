@@ -16,24 +16,24 @@ const articleSchema = new Schema({
                 value:{
                     type: String,
                 },
-                htmltype:{
-                    type: String,
-                },
                 position:{
                     type: Number,
                 },
+                name:{
+                    type: String,
+                }
             }            
         ]
 });
 
 
-articleSchema.methods.addElement = function (value, htmltype, position) {
+articleSchema.methods.addElement = function (value, position, name) {
         
     this.article.push({
             //WHERE THE MAGIC HAPPENS
             value: value,
-            htmltype: htmltype,
-            position:position
+            position:position,
+            name: name
         });
 };
 

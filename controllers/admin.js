@@ -1,8 +1,9 @@
 const express =   require('express');
 const router = express.Router();
 const articleSchema = require('../model/article.js');
+const readJsonAndAutoDestruct = require('../util/filehelper.js').readJsonAndAutoDestruct;
 const { json } = require('body-parser');
-
+const fs = require('fs');
 const nodemailer = require('nodemailer');
 const sendgridTransport = require('nodemailer-sendgrid-transport');
 
@@ -12,37 +13,57 @@ const transporter = nodemailer.createTransport(sendgridTransport({
   }
 }));
 
-router.get('/', (req, res, next) => {
-    res.render('home', { 
-        title: 'Portifolio'
+
+
+function deleteFile(path){
+    fs.unlink(path, e =>{
+        if(e){
+            throw (e);
+        }
     });
-});
+}
 
 router.get('/article', (req, res, next) => {
     res.render('article', {
-        title: 'Article'
+        title: 'Add Article'
     });
 });
 
-router.post('/article', (req, res, next) => {
-    const newArticle = new articleSchema({
-        creation: new Date()
-    });
+router.post('/article', async (req, res, next) => {
+    if(!req.files.image){
+        const error = new Error('No Main Image provided');
+        error.status = 422;
+        throw error;
+    }
+    const imageURL = req.files.image[0].path;
 
-    console.log('server: ',req.body);
-    req.body.forEach(element => {
-    newArticle.addElement(element.value, element.htmltype, element.position);   
-    });   
 
-    console.log('article created', newArticle);
-    
-   newArticle.save()
-   .then(result => {
-        res.status(201).json({
-            message:'article created succesfully'
+    let path = req.files.objectsArray[0].path;
+    fs.readFile(path, (e, articleData) => {
+        let jsonArray = [...JSON.parse(articleData)];
+        deleteFile(path);
+        console.log('articleData', jsonArray, 'path', imageURL);
+
+        const newArticle = new articleSchema({
+            creation: new Date()
         });
-   }).catch(e=> console.log('error', e) );
-          
+
+        jsonArray.forEach(element => {
+            if(element.name === 'main-image' || element.name === 'image'){
+                newArticle.addElement(imageURL, element.position,element.name);
+            }else{
+                newArticle.addElement(element.value, element.position,element.name);
+            }
+        });   
+
+        newArticle.save()
+        .then(result => {
+                res.status(201).json({
+                    message:'article created succesfully'
+                });
+        }).catch(e=> console.log('error', e) );
+        
+    });
 });
 
 router.get('/contact', (req, res, next) => {
@@ -67,7 +88,7 @@ router.post('/contact', (req, res, next) => {
         res.redirect('/');
     }).catch(e=> console.log('error', e)
     );
-    console.log(name, email, message);
+
     
     
 });    

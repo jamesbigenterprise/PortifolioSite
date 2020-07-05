@@ -2,8 +2,24 @@
 <html lang="en">
     <%- include ('include/header', {title:title}) %>
 <body>
-    <h1>Portifolio Home</h1>
+    
+    <div class="container">
+        <%- include ('include/topNav') %>
+     <h1>Portifolio Home</h1>
+    
+        <div class="container">
 
-    <%- include ('include/footer') %>
+  </div>
+</div>
+      <div class="col-lg-4">
+        <img class="img-thumbnail profile  img-responsive float:left" src="/images/profile.jpg">
+        <h2 >Thiago Alves</h2>
+        <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.</p>
+        <%- include ('include/footer') %>
+     </div>
+
+    
 </body>
 </html>
+
+

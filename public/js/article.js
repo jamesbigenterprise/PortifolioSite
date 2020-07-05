@@ -6,7 +6,6 @@ addItemButton.addEventListener('click', () => {
     const itemSelected = document.querySelector("#add-item").value;
     addItem(itemSelected);
     
-    //console.log('check the sequence', currentItems);
 });
 
 document.querySelector('#save').addEventListener('click', () =>{
@@ -19,43 +18,50 @@ function save (){
     let position = 0;
     let objectsArray = [];
 
+    console.log('currentItems', currentItems);
+    
+    //file handling
+    const formData = new FormData();
+
     currentItems.forEach(item => {
 
         //gather the information to rebuild
         //name
         const name = item.children[1].attributes[0].value;
-        //input type
-        const type = item.children[1].attributes[1].nodeValue;
         //current value *if any
         const value = item.children[1].value;
 
+        if(name === 'main-image'){
+            formData.append('image', item.children[1].files[0])
+        }
         
-        
-
         //add to the json
         const singleObject = {
             name: name,
             value: value,
-            position:position,
-            htmltype: type
+            position:position
         }
-        console.log('singleObject.position:',singleObject.position );
+        
         objectsArray.push(singleObject);
         position++;
     });
+    const jsonArray = JSON.stringify(objectsArray); 
 
+    console.log(jsonArray, objectsArray);
+    
+    const blob = new Blob([jsonArray],{type : 'application/json'});
+    formData.append('objectsArray',blob);
+
+
+    
     //example 
     fetch('http://localhost:7000/admin/article', {
         method: 'POST',
-        body: JSON.stringify(objectsArray),
-        headers:{
-          'Content-Type':'application/json'
-        }
+        body: formData
       })
       .then(res => res.json())
       .then(res => {
         //show the message and update the view
-        console.log('client: ', res);
         
       });
 }
@@ -79,13 +85,14 @@ function addItem(name){
 
         //gather the information to rebuild
         //name
+    
         const name = item.children[1].attributes[0].value;
         //input type
         const type = item.children[1].attributes[1].nodeValue;
         //current value *if any
         const value = item.children[1].value;
         //create a json with the new element
-        console.log('name', name, 'type', type);
+        
 
         //recreate the element
         let container = createSingleElement(name);
@@ -94,12 +101,13 @@ function addItem(name){
         const singleObject = {
             name: name,
             value: value,
-            position:position
+            position:position,
+            name: name
         }
         objectsArray.push(singleObject);
         position++;
     });
-    console.log(objectsArray);
+  
     
 }
 
@@ -110,18 +118,17 @@ function createSingleElement (name){
     let label = document.createElement('label');
     label.setAttribute('for', name);
     label.innerHTML  = name + ':';
-    console.log(name === 'paragraph');
     let input = document.createElement('input');
     if(name === 'paragraph'){
-        input = document.createElement(getType(name));    
+        input = document.createElement(getType(name));  
+        input.setAttribute('name', name);  
         input.setAttribute('rows', 10);
         input.setAttribute('cols', 50);
     }else{
         
         input.setAttribute('type', getType(name));
+        input.setAttribute('name', name);
     }
-    
-    input.setAttribute('name', name);
 
     container.appendChild(label);
     container.appendChild(input);
