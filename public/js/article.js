@@ -1,5 +1,5 @@
-let URL = 'http://localhost:7000';
-//let URL = 'https://thiago-alves-portifolio.herokuapp.com/';
+//let URL = 'http://localhost:7000';
+let URL = 'https://thiago-alves-portifolio.herokuapp.com/';
 
 
 //grab the button

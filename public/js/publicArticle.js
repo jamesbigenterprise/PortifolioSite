@@ -1,5 +1,5 @@
-let URL = 'http://localhost:7000';
-//let URL = 'https://thiago-alves-portifolio.herokuapp.com/';
+//URL = 'http://localhost:7000';
+URL = 'https://thiago-alves-portifolio.herokuapp.com/';
 
 function displayArticle(){
     //fetch the article
