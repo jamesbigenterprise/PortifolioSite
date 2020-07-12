@@ -2,32 +2,48 @@ const express =   require('express');
 const router = express.Router();
 const articleSchema = require('../model/article.js');
 
-router.get('/', (req, res, next) => {
-    res.render('home', {
-        title: 'Portifolio'
-    });
-});
 
-router.get('/article', (req, res, next) => {
-    res.render('articleView', {
-        title: 'Individual Article'
-    });
-});
-//TODO
-//Make it dynamic to open specific articles
-router.get('/articleID', (req, res, next) => {
+router.get('/article/:articleId', (req, res, next) => {
 
+    console.log('welcome to the dinamic middlewhere');
     //get all articles
-    articleSchema.findOne()
+    articleSchema.findById(req.params.articleId)
     .populate('article')
     .then(article => {
         console.log('data retrieved', article);
         //send them back
-        res.status(201).json(article)
+        res.status(201).json(article);
     })
     .catch(e=> console.log());
-     
 });
+
+router.get('/', (req, res, next) => {
+    
+        res.render('home', {
+            title: 'Portifolio'
+        });
+    
+});
+
+router.get('/contact', (req, res, next) => {
+    res.render('contactme', {
+        title: 'Contact Me'
+    });
+});
+
+router.get('/article', (req, res, next) => {
+    articleSchema.find()
+    .populate('article')
+    .then(articles => {
+        //send them back
+        res.status(201).json(articles);
+    
+    })
+    .catch(e=> console.log());
+
+});
+
+
 
 
 module.exports = router;

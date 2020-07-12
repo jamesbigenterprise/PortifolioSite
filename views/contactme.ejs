@@ -1,7 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include ('include/header', {title:title}) %>
+<body>
+  <div class="container">
+      <%- include ('include/topNav') %>
+      <h1>Portifolio Home</h1> 
+
+      <div class="row profile-home">
+        <img class="img-thumbnail profile  img-responsive float:left col-sm-3" src="/images/profile.jpg">
+        <div class="container-fluid col-sm-9">
+          <h2 class="col-sm-12">Thiago Alves</h2>
+          <p class="col-sm-12"> Donec sed odio dui. 
+            Etiam porta sem malesuada magna mollis euismod. 
+            Nullam id dolor id nibh ultricies vehicula ut id elit. 
+            Morbi leo risus, porta ac consectetur ac, vestibulum at eros. 
+            Praesent commodo cursus magna.</p>
+        </div> <!-- container-fluid col-sm-9  -->       
+      </div><!-- row  -->
+     
+   
+  </div> <!--container -->
+  <%- include ('include/contact-btn') %> 
+  <%- include ('include/footer') %>  
 
   <!-- Not visible in the page at first - Modals -->
   <!-- Login Bootstrap modal -->
-  <div class="modal fade" tabindex="-1" role="dialog" id="exampleModal">
+  <div class="modal" tabindex="-1" role="dialog" id="exampleModal">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -35,7 +59,7 @@
   </div>
   
   <!-- Sign UP Bootstrap modal -->
-  <div class="modal fade" tabindex="-1" role="dialog" id="signupmodal">
+  <div class="modal" tabindex="-1" role="dialog" id="signupmodal">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -74,7 +98,11 @@
             <small id="fieldHelp" class="form-text text-muted">Type your portifolio's field, like Programming, Arts, Civil Engineering, etc</small>   
           </div>
 
-       
+          <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input type="password" class="form-control" id="loginpassword" placeholder="Password">
+            <small id="pwrdReq" class="form-text text-muted">Password must contain at least 8 numeric characters</small>
+          </div>
           
         </div>
         <div class="modal-footer">
@@ -85,75 +113,13 @@
     </div>
   </div>
 
-  <!-- Create Article Modal -->
-  <div class="modal fade" tabindex="-1" role="dialog" id="crudarticlemodal">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Todo Edit/Create</h5>
-
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-
-        <div class="modal-body" >
-
-            <div class="elements" id="allItemsConteiner">
-                <div class="element form-group">
-                    <label for="main-image"> Main Image: </label>
-                    <input name="main-image" type="file" class="form-control" >
-                </div> 
-                <div class="element form-group">
-                    <label for="title"> Title: </label>
-                    <input name="title" type="text" class="form-control" >
-                </div>
-            </div>
-            <!-- form controls -->
-            <select class="form-control" name="add-item" id="add-item">
-                <option value="paragraph"> Paragraph</option>
-                 <option value="youtube-video"> YouTube Video</option>
-                 <option value="subheading"> Subheading </option>
-                 <option value="image"> Image </option>
-            </select>
-            <button id="add-item-button">Add item</button>
-
-            <button >Save</button>
-        </div>
-
-        <div class="modal-footer">
-          <button id="save" type="button" class="btn btn-primary">Save</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        </div>
-      </div>
-    </div>
-
-  </div>
+<br>
 
 
-  <button class="btn" type="button" data-toggle="modal" data-target="#crudarticlemodal">
-    Add Article
-  </button>
 
-<!-- End of the article modal -->  
 
-<footer class="footer page-footer ">
-    <div class="container">
-        <ul class="row">
-            <!-- <li class="col-sm-3  "><a class="btn btn-link text-dark" href="/admin/article"> Add Article </a></li> -->
-            <li class="col-sm-3  "><a class="btn btn-link text-dark" href="/admin/contact">Contact</a></li> 
-            <li class="col-sm-3  "><button class="btn btn-link text-dark" type="button" class="link" data-toggle="modal" data-target="#exampleModal">
-                Admin LogIn
-              </button></li>
-            <li class="col-sm-3 "><button class="btn btn-link text-dark" type="button" class="link" data-toggle="modal" data-target="#signupmodal">
-                Sign Up
-              </button></li>
-        </ul>
-    </div>
+       
+</body>
+</html>
 
-    
-    <div class="row">
-        <small class="footer-copyright text-center py-3 col-sm-12 font-weight-bold"> Portifolio Site &copy; 2020 - Thiago Alves</small>
-    </div>
-</footer>
-<script defer src="/js/article.js"></script>  
+

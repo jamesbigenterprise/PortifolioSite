@@ -50,7 +50,7 @@ router.post('/article', async (req, res, next) => {
 
         jsonArray.forEach(element => {
             if(element.name === 'main-image' || element.name === 'image'){
-                newArticle.addElement(imageURL, element.position,element.name);
+                newArticle.addElement(imageURL, element.position, element.name);
             }else{
                 newArticle.addElement(element.value, element.position,element.name);
             }

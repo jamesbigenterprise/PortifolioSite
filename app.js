@@ -47,13 +47,6 @@ const fileFilter = (req, file, cb) => {
      }
 }
 
-
-
-
-
-
-
-
 const fileupload = [{name:'image', maxCount: 1}, {name:'objectsArray', maxCount: 1} ];
 
 app.set('view engine', 'ejs')

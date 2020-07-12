@@ -1,9 +1,59 @@
-body{
-    background-color:#245375;
-}
-img{
+
+
+#allItemsConteiner img{
     width: 100%;
 }
 img.profile{
     border-radius: 50%;
+}
+.profile-home{
+    margin-bottom: 3em;
+}
+.profile-home p{
+    width: 100%;
+}
+.home a {
+
+    height: 200px;
+
+    background-color: aliceblue;
+    background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin: auto;
+  font-size: 2em;
+}
+
+.contact{
+
+    position: fixed;
+    top: 20px;
+    right: 20px;
+}
+footer{
+    width: 100%;
+    background-color: #007bff;
+    overflow: hidden;
+}
+
+footer ul{
+    list-style-type: none;
+    display: block;
+    
+
+}
+footer li{
+    float: left;   
+}
+footer a{
+    
+    font-size: 1.1em;
+}
+footer small{
+    background-color: #0069d9;
+    
+}
+.fa-trash-o{
+    font-size: 2em;
+    color: red;
 }

@@ -2,26 +2,48 @@
 <html lang="en">
 <%- include ('include/header', {title:title}) %>
 <body>
-    <h1> <% title %> </h1>
 
-    <form action="/admin/contact" method="POST">
-        <label for="name">Your name: </label>
-        <input type="text" name="name">
-        <br>
-        <label for="email">Email: </label>
-        <input type="email" name="email">
-        <br>
-        <label for="message">Message: </label>
-        <textarea rows="4" cols="50" name="message"></textarea>
-        <br>
-        <button type="submit"> Send </button>
-    </form>
+    <div class="container">
+        <h1>Portifolio Home</h1> 
+        <div class="row">
+
+            <div class="row profile-home col-lg-6">
+                <img class="img-thumbnail profile  img-responsive float:left col-lg-8" src="/images/profile.jpg">
+                <div class="container-fluid col-lg-12">
+                  <h2 class="col-sm-12">Thiago Alves</h2>
+                  <p class="col-sm-12"> Donec sed odio dui. 
+                    Etiam porta sem malesuada magna mollis euismod. 
+                    Nullam id dolor id nibh ultricies vehicula ut id elit. 
+                    Morbi leo risus, porta ac consectetur ac, vestibulum at eros. 
+                    Praesent commodo cursus magna.</p>
+                </div> <!-- container-fluid col-sm-9  -->       
+              </div><!-- row  -->
+        
+        <div class="col-sm-6">
+            <h1> <% title %> </h1>
+        <form class="form-group" action="/admin/contact" method="POST">
+            <label for="name">Your name: </label>
+            <input class="form-control" type="text" name="name">
+            <br>
+            <label for="email">Email: </label>
+            <input class="form-control" type="email" name="email">
+            <br>
+            <label for="message">Message: </label>
+            <textarea class="form-control" rows="4" cols="50" name="message"></textarea>
+            <br>
+            <button type="submit"> Send </button>
+        </form>
+    </div>
+        </div>
+
+
+    
+
     </div> <!-- container -->
      
   
 
 
-
-<!-- <script defer src="/js/article.js"></script>   -->
+    <%- include ('include/footer') %>  
 </body>
 </html>
