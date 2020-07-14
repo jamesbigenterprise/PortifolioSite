@@ -35,6 +35,16 @@ articleSchema.methods.addElement = function (value, position, name) {
             position:position,
             name: name
         });
-};
+}
+
+
+articleSchema.methods.addElement = function (value, position, name){
+//once we are done with the editing, remove the images with this article's id
+//for now, remove everything but the images
+
+//
+}
+
+
 
 module.exports = mongoose.model('Article', articleSchema);

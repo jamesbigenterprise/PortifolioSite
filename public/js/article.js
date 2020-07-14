@@ -1,5 +1,5 @@
-let URL = 'http://localhost:7000';
-//let URL = 'https://thiago-alves-portifolio.herokuapp.com';
+//let URL = 'http://localhost:7000';
+let URL = 'https://thiago-alves-portifolio.herokuapp.com';
 
 
 //grab the button
@@ -7,10 +7,15 @@ let URL = 'http://localhost:7000';
 
 const addItemButton = document.querySelector("#add-item-button-c");
 addItemButton.addEventListener('click', () => {
-    const itemSelected = document.querySelector("#add-item").value;
+    const itemSelected = document.querySelector("#add-item-c").value;
     addItem(itemSelected);
 });
-
+document.querySelector('#save-c').addEventListener('click', () =>{
+    save();
+});
+document.querySelector('#save').addEventListener('click', () =>{
+    saveEdit();
+});
 function addItem(name){
     const allItemsConteiner = document.querySelector("#allItemsConteiner");
     const newItem = createInput(name);
@@ -47,7 +52,7 @@ function createInput(name){
     label.setAttribute('for', name);
     label.innerHTML  = name + ':';
     let input = document.createElement('input');
-    console.log('creating input of type === ', getType(name), 'name is == ', name );
+
     if(name === 'paragraph'){
         input = document.createElement(getType(name));  
         input.setAttribute('name', name);  
@@ -55,9 +60,8 @@ function createInput(name){
         input.setAttribute('cols', 50);
         input.setAttribute('class', 'form-control');
     }else{
-        
-        input.setAttribute('type', getType(name));
         input.setAttribute('name', name);
+        input.setAttribute('type', getType(name));
         input.setAttribute('class', 'form-control');
     }
     let icon  = document.createElement('i');
@@ -65,46 +69,40 @@ function createInput(name){
     icon.addEventListener('click', deleteElement)
     container.appendChild(label);
     container.appendChild(input);
-    container.appendChild(icon);
+    if(!(name === 'title' || name === 'main-image')){
+        container.appendChild(icon);
+    }
+    
     return container;
 }
 
 
-document.querySelector('#save').addEventListener('click', () =>{
-    save();
-});
+
 
 
 function save (){
-
-    const currentItems = document.querySelectorAll(".element");
-
+    const currentItems = document.querySelectorAll("#allItemsConteiner .element");
     let position = 0;
     let objectsArray = [];
-
-
-    
     //file handling
     const formData = new FormData();
-
     currentItems.forEach(item => {
         //gather the information to rebuild
         //name
         const name = item.children[1].attributes[0].value;
-        console.log('the path to get down to the name item.children[1].attributes[0].value == ',item);
         //current value *if any
         const value = item.children[1].value;
         if(name === 'main-image'){
             formData.append('image', item.children[1].files[0])
         }
-        console.log('save - ', name, value);
+
         //add to the json
         const singleObject = {
             name: name,
             value: value,
             position:position
         }
-        console.log('object added to the blob', singleObject);
+
         objectsArray.push(singleObject);
         position++;
     });
@@ -120,7 +118,6 @@ function save (){
       .then(res => res.json())
       .then(res => {
         //show the message and update the view
-        
       });
 }
 
@@ -139,8 +136,23 @@ function editArticle(articleId){
           let modelBody = document.querySelector(`#allItemsConteinerEdit`);
           res.article.forEach(el =>{
             const newItem = createInput(el.name);
-            newItem.value = el.value;
+            if(newItem.children[1].attributes[1].textContent === 'file'){
+                let fieldHelp = document.createElement('small');
+                fieldHelp.setAttribute('class', 'form-text text-muted');
+                fieldHelp.setAttribute('id','fieldHelp');
+                fieldHelp.innerHTML = "Do not upload anything if you wish to keep the previous image";
+                newItem.appendChild(fieldHelp);
+                newItem.children[0].innerHTML = el.value;
+            }else{
+                newItem.children[1].value = el.value;
+            }
             modelBody.appendChild(newItem);
+            let articleIDcontainer = document.createElement('input');
+            articleIDcontainer.setAttribute('type','hidden');
+            articleIDcontainer.setAttribute('id', 'articleID');
+            articleIDcontainer.value = res._id;
+            modelBody.appendChild(articleIDcontainer);
+    
           });
           //call the module 
           $('#editArticlemodal').modal();
@@ -148,4 +160,48 @@ function editArticle(articleId){
     //populate a mudule with it
 
     //overwrite the current article 
+}
+
+//save the edit
+function saveEdit (){
+    const currentItems = document.querySelectorAll("#allItemsConteinerEdit .element");
+    console.log('testing if we got the data from the correct model', currentItems);
+    let articleID = document.querySelector('#articleID');
+    let position = 0;
+    let objectsArray = [];
+    //file handling
+    const formData = new FormData();
+    currentItems.forEach(item => {
+        //gather the information to rebuild
+        //name
+        const name = item.children[1].attributes[0].value;
+        //current value *if any
+        const value = item.children[1].value;
+        if(name === 'main-image'){
+            formData.append('image', item.children[1].files[0])
+        }
+
+        //add to the json
+        const singleObject = {
+            name: name,
+            value: value,
+            position:position
+        }
+
+        objectsArray.push(singleObject);
+        position++;
+    });
+
+    const jsonArray = JSON.stringify(objectsArray); 
+    const blob = new Blob([jsonArray],{type : 'application/json'});
+    formData.append('objectsArray',blob);
+
+    fetch(URL + '/admin/article/articleID', {
+        method: 'POST',
+        body: formData
+      })
+      .then(res => res.json())
+      .then(res => {
+        //show the message and update the view
+      });
 }

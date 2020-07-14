@@ -42,7 +42,7 @@ router.post('/article', async (req, res, next) => {
     fs.readFile(path, (e, articleData) => {
         let jsonArray = [...JSON.parse(articleData)];
         deleteFile(path);
-        console.log('articleData', jsonArray, 'path', imageURL);
+
 
         const newArticle = new articleSchema({
             creation: new Date()

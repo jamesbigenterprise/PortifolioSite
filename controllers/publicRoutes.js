@@ -5,12 +5,12 @@ const articleSchema = require('../model/article.js');
 
 router.get('/article/:articleId', (req, res, next) => {
 
-    console.log('welcome to the dinamic middlewhere');
+
     //get all articles
     articleSchema.findById(req.params.articleId)
     .populate('article')
     .then(article => {
-        console.log('data retrieved', article);
+
         //send them back
         res.status(201).json(article);
     })
