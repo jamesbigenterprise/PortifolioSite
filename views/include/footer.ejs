@@ -85,6 +85,48 @@
     </div>
   </div>
 
+  <!-- Edit Article Modal -->
+  <div class="modal fade" tabindex="-1" role="dialog" id="editArticlemodal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Todo Edit/Create</h5>
+
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div class="modal-body" >
+
+            
+              <div class="elements" id="allItemsConteinerEdit">
+                
+            </div>
+            <!-- form controls -->
+            <select class="form-control" name="add-item" id="add-item">
+                <option value="paragraph"> Paragraph</option>
+                 <option value="youtube-video"> YouTube Video</option>
+                 <option value="subheading"> Subheading </option>
+                 <option value="image"> Image </option>
+            </select>
+            <button id="add-item-button">Add item</button>
+        </div>
+
+        <div class="modal-footer">
+          <button id="save" type="button" class="btn btn-primary">Save</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+
+<!-- End of the article modal -->  
+
+
   <!-- Create Article Modal -->
   <div class="modal fade" tabindex="-1" role="dialog" id="crudarticlemodal">
     <div class="modal-dialog" role="document">
@@ -99,7 +141,8 @@
 
         <div class="modal-body" >
 
-            <div class="elements" id="allItemsConteiner">
+            
+              <div class="elements" id="allItemsConteiner">
                 <div class="element form-group">
                     <label for="main-image"> Main Image: </label>
                     <input name="main-image" type="file" class="form-control" >
@@ -107,7 +150,7 @@
                 <div class="element form-group">
                     <label for="title"> Title: </label>
                     <input name="title" type="text" class="form-control" >
-                </div>
+                </div> 
             </div>
             <!-- form controls -->
             <select class="form-control" name="add-item" id="add-item">
@@ -116,9 +159,7 @@
                  <option value="subheading"> Subheading </option>
                  <option value="image"> Image </option>
             </select>
-            <button id="add-item-button">Add item</button>
-
-            <button >Save</button>
+            <button id="add-item-button-c">Add item</button>
         </div>
 
         <div class="modal-footer">
@@ -134,6 +175,11 @@
   <button class="btn" type="button" data-toggle="modal" data-target="#crudarticlemodal">
     Add Article
   </button>
+
+<!-- End of the article modal -->  
+
+
+
 
 <!-- End of the article modal -->  
 
@@ -156,4 +202,4 @@
         <small class="footer-copyright text-center py-3 col-sm-12 font-weight-bold"> Portifolio Site &copy; 2020 - Thiago Alves</small>
     </div>
 </footer>
-<script defer src="/js/article.js"></script>  
+

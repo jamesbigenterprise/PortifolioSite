@@ -1,11 +1,11 @@
-//let URL = 'http://localhost:7000';
-let URL = 'https://thiago-alves-portifolio.herokuapp.com';
+let URL = 'http://localhost:7000';
+//let URL = 'https://thiago-alves-portifolio.herokuapp.com';
 
 
 //grab the button
 
 
-const addItemButton = document.querySelector("#add-item-button");
+const addItemButton = document.querySelector("#add-item-button-c");
 addItemButton.addEventListener('click', () => {
     const itemSelected = document.querySelector("#add-item").value;
     addItem(itemSelected);
@@ -28,7 +28,9 @@ function getType(name){
         case 'youtube-video':
             return 'text';
         case 'subheading':
-            return 'text'
+            return 'text';
+        case 'title':
+            return 'text';
         default:
             return;
     }
@@ -40,13 +42,12 @@ function deleteElement (event){
 
 function createInput(name){
     let container = document.createElement('div');
-    container.setAttribute('class', 'element');
-    container.setAttribute('class', 'form-group');
+    container.setAttribute('class', 'element form-group');
     let label = document.createElement('label');
     label.setAttribute('for', name);
     label.innerHTML  = name + ':';
     let input = document.createElement('input');
-    console.log('creating input of type === ', getType(name) );
+    console.log('creating input of type === ', getType(name), 'name is == ', name );
     if(name === 'paragraph'){
         input = document.createElement(getType(name));  
         input.setAttribute('name', name);  
@@ -90,11 +91,13 @@ function save (){
         //gather the information to rebuild
         //name
         const name = item.children[1].attributes[0].value;
+        console.log('the path to get down to the name item.children[1].attributes[0].value == ',item);
         //current value *if any
         const value = item.children[1].value;
         if(name === 'main-image'){
             formData.append('image', item.children[1].files[0])
         }
+        console.log('save - ', name, value);
         //add to the json
         const singleObject = {
             name: name,
@@ -123,3 +126,26 @@ function save (){
 
 
 
+//edit article
+
+function editArticle(articleId){
+    //fetch the article
+    fetch(URL + '/article/' + articleId, {
+        method: 'GET',
+      })
+      .then(res => res.json())
+      .then(res => {
+          //fill the module with the article
+          let modelBody = document.querySelector(`#allItemsConteinerEdit`);
+          res.article.forEach(el =>{
+            const newItem = createInput(el.name);
+            newItem.value = el.value;
+            modelBody.appendChild(newItem);
+          });
+          //call the module 
+          $('#editArticlemodal').modal();
+          });
+    //populate a mudule with it
+
+    //overwrite the current article 
+}

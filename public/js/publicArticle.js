@@ -1,5 +1,5 @@
-//URL = 'http://localhost:7000';
-URL = 'https://thiago-alves-portifolio.herokuapp.com';
+URL = 'http://localhost:7000';
+//URL = 'https://thiago-alves-portifolio.herokuapp.com';
 
 function displayArticle(){
     //fetch the article
@@ -93,12 +93,23 @@ function openArticle(articleId){
       })
       .then(res => res.json())
       .then(res => {
+          console.log('thats all we got ', res);
           //erase everything and fill with the article
           document.querySelector('#home').innerHTML =  '';
           let container = document.createElement('div');
+          //-----------------------------------------------------
+          let editButton = document.createElement('button');
+          editButton.setAttribute('class', 'btn');
+          editButton.innerHTML = 'Edit Article';
+          editButton.addEventListener('click', ()=>{
+            editArticle(res._id);
+          });
+          container.appendChild(editButton);
+          //-------------------------------------------
           container.setAttribute('class', 'container');
           res.article.forEach(element => {
               container.appendChild(createSingleElement(element));  
+              console.log('loading ', element, ' to the article');
           });
 
         document.querySelector('#home').appendChild(container);
